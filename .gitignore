@@ -1,0 +1,12 @@
+# Python tracking
+.venv/
+__pycache__/
+*.pyc
+.env
+
+# Node tracking
+frontend/node_modules/
+frontend/dist/
+
+# IDE files
+.vscode/
