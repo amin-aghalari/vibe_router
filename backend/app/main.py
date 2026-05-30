@@ -29,7 +29,7 @@ class VibeRequest(BaseModel):
 
 class TravelRouterRequest(BaseModel):
     target_city: str
-    timeframe_hours: int
+    timeframe_days: int
 # Your @app.post("/api/route-my-vibe") goes down here...
 
 
@@ -148,8 +148,8 @@ async def route_my_travel(request: TravelRouterRequest):
     try:
         # 1. Ask OpenAI to extract the ultimate high-density landmarks for the timeframe
         system_prompt = (
-            f"You are an expert travel guide. The user has only {request.timeframe_hours} hours in {request.target_city}. "
-            "Identify the absolute top 'must-see' iconic milestones (maximum 5 locations) that represent the core identity of the city. "
+            f"You are an expert travel guide. The user has {request.timeframe_days} days in {request.target_city}. "
+            "Identify the absolute top 'must-see' iconic milestones (maximum 6 locations) that represent the core identity of the city. "
             "Return ONLY a JSON object with a 'landmarks' array containing the names of these places. "
             "Example format: { 'landmarks': ['Millennium Park', 'Navy Pier'] }"
         )
@@ -200,8 +200,8 @@ async def route_my_travel(request: TravelRouterRequest):
         # 3. Return the itinerary
         return {
             "city": request.target_city,
-            "timeframe_hours": request.timeframe_hours,
-            "message": f"Optimized routing for your {request.timeframe_hours}-hour stay in {request.target_city}.",
+            "timeframe_days": request.timeframe_days,
+            "message": f"Optimized routing for your {request.timeframe_days}-day trip to {request.target_city}.",
             "milestones": hydrated_landmarks
         }
 
